@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MainActivityTheme" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground" >@color/PrimaryColor</item>
+        <item name="android:windowSplashScreenAnimatedIcon" >@drawable/animated_gif</item>
+        <item name="android:windowSplashScreenAnimationDuration" >2000</item>
+
+        <item name="postSplashScreenTheme">@style/Base.Theme.ECommerce</item>
+        <item name="android:statusBarColor">@color/PrimaryColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" >false</item>
+    </style>
+</resources>

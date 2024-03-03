@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -33,6 +35,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures{
+        //noinspection DataBindingWithoutKapt
+        dataBinding = true
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -46,4 +54,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //firebase
+    implementation(platform(libs.firebase.bom))
+
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-crashlytics")
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-analytics")
+
 }

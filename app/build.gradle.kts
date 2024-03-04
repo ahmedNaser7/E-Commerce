@@ -63,4 +63,6 @@ dependencies {
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-analytics")
 
+    implementation (libs.reactivenetwork.rx2)
+
 }

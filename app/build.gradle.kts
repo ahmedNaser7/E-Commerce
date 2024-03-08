@@ -63,6 +63,15 @@ dependencies {
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-analytics")
 
+    // internet connection
     implementation (libs.reactivenetwork.rx2)
+
+    // navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    //data Store
+    implementation(libs.androidx.datastore.preferences)
+
 
 }

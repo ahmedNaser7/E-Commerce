@@ -2,26 +2,35 @@ package com.example.ecommerce.data.repository.user
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
-import com.example.ecommerce.data.datastore.DataStoreKeys.IS_USER_LOGGED_IN
-import com.example.ecommerce.data.datastore.dataStore
+import com.example.ecommerce.data.datasource.datastore.DataStoreKeys.IS_USER_LOGGED_IN
+import com.example.ecommerce.data.datasource.datastore.UserPreferencesDataSource
+import com.example.ecommerce.data.datasource.datastore.dataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-class UserPreferencesRepositoryImpl(private val context: Context):UserPreferencesRepository {
+class UserPreferencesRepositoryImpl(
+    private val userPreferencesDataSource: UserPreferencesDataSource)
+    :UserPreferencesRepository {
 
-    // Read from Data Store
+    // Read from data source
     override suspend fun isUserLoggedIn(): Flow<Boolean> {
-        return context.dataStore.data.map { preferences ->
-            preferences[IS_USER_LOGGED_IN] ?: false
-        }
+      return userPreferencesDataSource.isUserLoggedIn
     }
 
-    // write to Data Store
-    override suspend fun saveLoginState(isLoggedIn: Boolean) {
-        context.dataStore.edit{ preferences->
-            preferences[IS_USER_LOGGED_IN]=isLoggedIn
-        }
+    override fun getUserId(): Flow<String?> {
+        return userPreferencesDataSource.userID
     }
+
+    // write to data source
+    override suspend fun saveLoginState(isLoggedIn: Boolean) {
+       return userPreferencesDataSource.saveLoginState(isLoggedIn)
+    }
+
+    override suspend fun saveUserId(userId: String) {
+
+    }
+
 
 
 

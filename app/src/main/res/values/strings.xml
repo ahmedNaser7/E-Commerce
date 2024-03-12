@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">E-Commerce-lite</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_screen">register screen</string>
     <string name="login_screen">Login screen</string>
 </resources>

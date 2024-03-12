@@ -1,4 +1,4 @@
-package com.example.ecommerce.ui.login.viewmodel
+package com.example.ecommerce.ui.auth.viewmodel
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.example.ecommerce.ui
+package com.example.ecommerce.ui.home
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -8,36 +8,32 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.datastore.core.DataStore
-import androidx.datastore.core.DataStoreFactory
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.R
-import com.example.ecommerce.data.datastore.DataStoreKeys
+import com.example.ecommerce.data.datasource.datastore.UserPreferencesDataSource
 import com.example.ecommerce.data.repository.user.UserPreferencesRepositoryImpl
-import com.example.ecommerce.ui.common.UserViewModel
-import com.example.ecommerce.ui.common.UserViewModelFactory
-import com.example.ecommerce.ui.login.AuthActivity
-import kotlinx.coroutines.Dispatchers
+import com.example.ecommerce.ui.common.viewmodel.UserViewModel
+import com.example.ecommerce.ui.common.viewmodel.UserViewModelFactory
+import com.example.ecommerce.ui.auth.AuthActivity
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
-     private val userViewModel:UserViewModel by viewModels {
-         UserViewModelFactory(UserPreferencesRepositoryImpl(this))
+     private val userViewModel: UserViewModel by viewModels {
+         UserViewModelFactory(UserPreferencesRepositoryImpl(userPreferencesDataSource = UserPreferencesDataSource(this)))
      }
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()
         super.onCreate(savedInstanceState)
+
         lifecycleScope.launch(Main) {
            val isLoggedIn = userViewModel.isUserLoggedIn().first()
+            Log.d(TAG,"onCreate : Logged In : $isLoggedIn")
             if(isLoggedIn){
                 setContentView(R.layout.activity_main)
-                Log.d(TAG,"Logged In : $isLoggedIn")
             }else{
-                Log.d(TAG,"Logged In : $isLoggedIn")
                 goToAuthActivity()
             }
         }
@@ -46,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToAuthActivity() {
-        val intent = Intent(this,AuthActivity::class.java).apply {
+        val intent = Intent(this, AuthActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val option = ActivityOptions.makeCustomAnimation(

@@ -1,4 +1,4 @@
-package com.example.ecommerce.ui.login
+package com.example.ecommerce.ui.auth
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

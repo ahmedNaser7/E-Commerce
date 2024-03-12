@@ -67,8 +67,9 @@ dependencies {
     implementation (libs.reactivenetwork.rx2)
 
     // navigation
-    implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
 
     //data Store
     implementation(libs.androidx.datastore.preferences)

@@ -3,7 +3,7 @@
 
     <style name="MainActivityTheme" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground" >@color/PrimaryColor</item>
-        <item name="android:windowSplashScreenAnimatedIcon" >@drawable/animated_gif</item>
+        <item name="android:windowSplashScreenAnimatedIcon" >@drawable/launcher_ic</item>
         <item name="android:windowSplashScreenAnimationDuration" >2000</item>
         <item name="android:windowSplashScreenBrandingImage">@drawable/launcher_ic</item>
 

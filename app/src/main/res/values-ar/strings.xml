@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">E-Commerce-lite</string>
+    <string name="register_screen" translatable="false">register screen</string>
+    <string name="login_screen" translatable="false">Login screen</string>
+    <string name="login_title" translatable="false">Welcome to Lafyuu</string>
+    <string name="login_sub_title" translatable="false">Sign in to continue</string>
+    <string name="loginEmailHint" translatable="false">\t Your Email</string>
+    <string name="loginPasswordHint" translatable="false">\t Your Password</string>
+    <string name="loginButtonHint" translatable="false">Sign Up</string>
+    <string name="login_with_google" translatable="false">Login with google</string>
+    <string name="login_with_facebook" translatable="false">Login with facebook</string>
+    <string name="forgot_password" translatable="false">Forgot Password?</string>
+    <string name="don_t_have_a_account" translatable="false">Don’t have a account?</string>
+    <string name="register" translatable="false"> Register</string>
+    <string name="or" translatable="false">OR</string>
+</resources>

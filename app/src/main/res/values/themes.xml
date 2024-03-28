@@ -15,9 +15,67 @@
     <style name="MainActivityTheme" parent="Base.Theme.ECommerce">
         <item name="android:statusBarColor">@color/PrimaryColor</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/PrimaryColor</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+
+    <style name="TextTitleStyle">
+        <item name="android:textColor">@color/PrimaryDarkColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="MessageTextStyle">
+        <item name="android:textColor">@color/neutralGray</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/poppins_normal</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textColor">@color/neutralGray</item>
+        <item name="hintTextColor">@color/neutralGray</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/edit_text_bg</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:fontFamily">@font/poppins_normal</item>
+
+    </style>
+
+    <style name="PrimaryButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@drawable/primary_button_bg</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SocialButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">57dp</item>
+        <item name="android:background">@drawable/edit_text_bg</item>
+        <item name="android:textColor">@color/neutralGray</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">16dp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="MediumPrimaryTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/PrimaryColor</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="Theme.ECommerce" parent="Base.Theme.ECommerce" />

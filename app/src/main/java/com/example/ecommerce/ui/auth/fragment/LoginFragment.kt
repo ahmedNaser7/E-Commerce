@@ -1,28 +1,26 @@
 package com.example.ecommerce.ui.auth.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.R
 import com.example.ecommerce.data.datasource.datastore.UserPreferencesDataSource
-import com.example.ecommerce.data.model.Resources
+import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.example.ecommerce.data.repository.user.UserPreferencesRepositoryImpl
 import com.example.ecommerce.databinding.FragmentLoginBinding
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
 import com.example.ecommerce.ui.common.view.ProgressDialog
+import com.example.ecommerce.ui.home.MainActivity
 import com.example.ecommerce.ui.showSnakeBarError
 import com.example.ecommerce.utils.CrashlyticsUtils
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.security.auth.login.LoginException
 
@@ -65,13 +63,13 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             loginViewModel.loginState.collect { resources ->
                 when (resources) {
-                    is Resources.Loading -> progressDialog.show()
-                    is Resources.Success -> {
+                    is Resource.Loading -> progressDialog.show()
+                    is Resource.Success -> {
                         progressDialog.dismiss()
-                        view?.showSnakeBarError(resources.data!!)
+                        goToHome()
                     }
 
-                    is Resources.Error -> {
+                    is Resource.Error -> {
                         progressDialog.dismiss()
                         val msg =
                             resources.exception?.message ?: getString(R.string.generic_err_msg)
@@ -81,6 +79,13 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun goToHome() {
+        requireContext().startActivity(Intent(requireContext(),MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        requireActivity().finish()
     }
 
     private fun logAuthIssueToCrashlytics(msg: String, provider: String) {

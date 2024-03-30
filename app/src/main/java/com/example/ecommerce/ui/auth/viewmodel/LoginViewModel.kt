@@ -4,10 +4,9 @@ package com.example.ecommerce.ui.auth.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.ecommerce.data.model.Resources
+import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.example.ecommerce.data.repository.user.UserPreferencesRepository
-import com.example.ecommerce.utils.CrashlyticsUtils
 import com.example.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.security.auth.login.LoginException
 
 class LoginViewModel
     (
@@ -27,7 +25,7 @@ class LoginViewModel
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
-    private val _loginState = MutableSharedFlow<Resources<String>>()
+    private val _loginState = MutableSharedFlow<Resource<String>>()
     val loginState = _loginState.asSharedFlow()
 
     val email = MutableStateFlow("")
@@ -44,13 +42,13 @@ class LoginViewModel
         if (isLoginIsValid.first()) {
             firebaseAuthRepository.loginWithEmailAndPassword(email, password).onEach { resources ->
                 when (resources) {
-                    is Resources.Loading -> _loginState.emit(Resources.Loading())
-                    is Resources.Success -> _loginState.emit(Resources.Success(resources.data!!))
-                    is Resources.Error -> _loginState.emit(Resources.Error(resources.exception!!))
+                    is Resource.Loading -> _loginState.emit(Resource.Loading())
+                    is Resource.Success -> _loginState.emit(Resource.Success(resources.data!!))
+                    is Resource.Error -> _loginState.emit(Resource.Error(resources.exception!!))
                 }
             }.launchIn(viewModelScope)
         } else {
-            _loginState.emit(Resources.Error(Exception("Invalid email or password")))
+            _loginState.emit(Resource.Error(Exception("Invalid email or password")))
         }
     }
 

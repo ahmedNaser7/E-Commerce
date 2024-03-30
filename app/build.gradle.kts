@@ -57,11 +57,20 @@ dependencies {
 
     //firebase
     implementation(platform(libs.firebase.bom))
-
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-firestore-ktx")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-crashlytics")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-analytics")
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation(libs.play.services.auth)
+
+    //noinspection UseTomlInstead
+
+    //noinspection UseTomlInstead
+
 
     // internet connection
     implementation (libs.reactivenetwork.rx2)

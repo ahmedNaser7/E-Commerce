@@ -6,12 +6,15 @@
     <string name="login_title">Welcome to Lafyuu</string>
     <string name="login_sub_title" >Sign in to continue</string>
     <string name="loginEmailHint">\t Your Email</string>
-    <string name="loginPasswordHint" >\t Your Password</string>
+    <string name="loginPasswordHint" >\t Password</string>
     <string name="loginButtonHint">Sign Up</string>
-    <string name="login_with_google" >Login with google</string>
+    <string name="login_with_google" >Login with Google</string>
     <string name="login_with_facebook" >Login with facebook</string>
     <string name="forgot_password" >Forgot Password?</string>
     <string name="don_t_have_a_account" >Don’t have a account?</string>
     <string name="register" > Register</string>
     <string name="or" >OR</string>
+    <string name="loading" translatable="false">Loading</string>
+    <string name="ok" translatable="false">ok\n</string>
+    <string name="generic_err_msg">Error please try again later.</string>
 </resources>

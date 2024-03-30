@@ -1,12 +1,16 @@
 package com.example.ecommerce.ui.home
 
+import android.animation.ObjectAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.R
@@ -16,6 +20,7 @@ import com.example.ecommerce.ui.common.viewmodel.UserViewModel
 import com.example.ecommerce.ui.common.viewmodel.UserViewModelFactory
 import com.example.ecommerce.ui.auth.AuthActivity
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -27,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()
         super.onCreate(savedInstanceState)
-
         lifecycleScope.launch(Main) {
            val isLoggedIn = userViewModel.isUserLoggedIn().first()
             Log.d(TAG,"onCreate : Logged In : $isLoggedIn")
@@ -54,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     private fun initSplashScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             installSplashScreen()
-            /* splashScreen.setOnExitAnimationListener {splashScreenView ->
+             splashScreen.setOnExitAnimationListener {splashScreenView ->
                  // Create your custom animation.
                  val slideUp = ObjectAnimator.ofFloat(
                      splashScreenView,
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
                  // Run your animation.
                  slideUp.start()
-             }*/
+             }
 
         }else{
             setTheme(R.style.Theme_ECommerce)

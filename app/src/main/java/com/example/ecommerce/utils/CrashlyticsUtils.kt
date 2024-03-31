@@ -10,6 +10,9 @@ object CrashlyticsUtils {
     const val CUSTOM_KEY_ENDPOINT = "Custom-key"
     const val CUSTOM_KEY = "Custom-key"
 
+    const val LOGIN_KEY = "LOGIN-KEY"
+    const val LOGIN_PROVIDER = "LOGIN_PROVIDER"
+
     fun sendLogToCrashlytics( msg:String ,vararg keys:String){
         keys.forEach { key ->
             FirebaseCrashlytics.getInstance().setCustomKey(key,msg)

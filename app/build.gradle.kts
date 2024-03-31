@@ -27,6 +27,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        forEach {
+            it.buildConfigField("String", "WEB_CLIENT_ID", "\"679455053031-h9foca1bis0g76vr4e9teakrdtbprui3.apps.googleusercontent.com\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -40,6 +43,7 @@ android {
         //noinspection DataBindingWithoutKapt
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -57,18 +61,28 @@ dependencies {
 
     //firebase
     implementation(platform(libs.firebase.bom))
-
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-firestore-ktx")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-crashlytics")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-analytics")
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation(libs.play.services.auth)
+
+    //noinspection UseTomlInstead
+
+    //noinspection UseTomlInstead
+
 
     // internet connection
     implementation (libs.reactivenetwork.rx2)
 
     // navigation
-    implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
 
     //data Store
     implementation(libs.androidx.datastore.preferences)

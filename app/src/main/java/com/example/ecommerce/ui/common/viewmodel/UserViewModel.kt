@@ -1,17 +1,27 @@
-package com.example.ecommerce.ui.common
+package com.example.ecommerce.ui.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.ecommerce.data.repository.user.UserPreferencesRepositoryImpl
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 // class to save the data from dataStore
 // observe on data
 // link
-class UserViewModel(val repo:UserPreferencesRepositoryImpl):ViewModel() {
+class UserViewModel(val userPreferencesRepository:UserPreferencesRepositoryImpl):ViewModel() {
 
-   suspend fun isUserLoggedIn()=repo.isUserLoggedIn()
+   suspend fun isUserLoggedIn()=userPreferencesRepository.isUserLoggedIn()
 
+   fun setIsLoggedIn(isLogged: Boolean){
+      viewModelScope.launch(IO) {
+         userPreferencesRepository.saveLoginState(isLogged)
+      }
+   }
+
+   // Todo : fun save_user_id and fun get_user
 }
 
 

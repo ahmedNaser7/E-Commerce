@@ -3,6 +3,7 @@ package com.example.ecommerce.data.repository.auth
 
 import com.example.ecommerce.data.model.Resource
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -36,4 +37,23 @@ class FirebaseAuthRepositoryImpl(
 
         return authTask
     }
+
+    override suspend fun loginWithGoogle(idToken: String): Flow<Resource<String>> = flow {
+        try {
+            emit(Resource.Loading())
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            val task = auth.signInWithCredential(credential).await()
+            task.user?.let{ user ->
+                emit(Resource.Success(user.uid))
+            } ?: run {
+                emit(Resource.Error(Exception("Unknown User")))
+            }
+
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+
+        }
+
+    }
+
 }

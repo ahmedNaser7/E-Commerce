@@ -27,6 +27,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        forEach {
+            it.buildConfigField("String", "WEB_CLIENT_ID", "\"679455053031-h9foca1bis0g76vr4e9teakrdtbprui3.apps.googleusercontent.com\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -40,6 +43,7 @@ android {
         //noinspection DataBindingWithoutKapt
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 }
 

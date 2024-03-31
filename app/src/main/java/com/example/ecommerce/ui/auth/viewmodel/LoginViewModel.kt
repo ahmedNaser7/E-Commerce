@@ -30,7 +30,7 @@ class LoginViewModel
 
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
-    // Todo(Resources generic )
+
 
     private val isLoginIsValid: Flow<Boolean> = combine(email, password) { email, password ->
         email.isValidEmail() && password.length >= 6
@@ -43,7 +43,10 @@ class LoginViewModel
             firebaseAuthRepository.loginWithEmailAndPassword(email, password).onEach { resources ->
                 when (resources) {
                     is Resource.Loading -> _loginState.emit(Resource.Loading())
-                    is Resource.Success -> _loginState.emit(Resource.Success(resources.data!!))
+                    is Resource.Success -> {
+                        //TODO get user details from the user id
+                        _loginState.emit(Resource.Success(resources.data!!))
+                    }
                     is Resource.Error -> _loginState.emit(Resource.Error(resources.exception!!))
                 }
             }.launchIn(viewModelScope)
@@ -52,6 +55,19 @@ class LoginViewModel
         }
     }
 
+
+    fun loginWithGoogle(idToken: String) = viewModelScope.launch(IO) {
+        firebaseAuthRepository.loginWithGoogle(idToken).onEach { resources ->
+            when (resources) {
+                is Resource.Loading -> _loginState.emit(Resource.Loading())
+                is Resource.Success -> {
+                    //TODO get user details from the user id
+                    _loginState.emit(Resource.Success(resources.data!!))
+                }
+                is Resource.Error -> _loginState.emit(Resource.Error(resources.exception!!))
+            }
+        }.launchIn(viewModelScope)
+    }
 
 
 }

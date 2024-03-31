@@ -16,5 +16,6 @@
     <string name="or" >OR</string>
     <string name="loading" translatable="false">Loading</string>
     <string name="ok" translatable="false">ok</string>
-    <string name="generic_err_msg">Error please try again later.</string>
+    <string name="generic_err_msg" translatable="false">Error please try again later.</string>
+    <string name="google_sign_in_field_msg" translatable="false">Google sign in failed, please retry again later.</string>
 </resources>

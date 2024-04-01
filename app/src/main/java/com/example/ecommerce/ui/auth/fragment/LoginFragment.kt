@@ -24,12 +24,19 @@ import com.example.ecommerce.ui.common.view.ProgressDialog
 import com.example.ecommerce.ui.home.MainActivity
 import com.example.ecommerce.ui.showSnakeBarError
 import com.example.ecommerce.utils.CrashlyticsUtils
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -39,10 +46,6 @@ import javax.security.auth.login.LoginException
 
 
 class LoginFragment : Fragment() {
-
-    private val progressDialog by lazy {
-        ProgressDialog.CraeteProgressDialog(requireContext())
-    }
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -55,6 +58,12 @@ class LoginFragment : Fragment() {
             firebaseAuthRepository = FirebaseAuthRepositoryImpl(FirebaseAuth.getInstance())
         )
     }
+
+    private val progressDialog by lazy { ProgressDialog.CraeteProgressDialog(requireContext()) }
+
+    lateinit var callbackManager: CallbackManager
+    lateinit var loginManager: LoginManager
+    lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +78,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        callbackManager = CallbackManager.Factory.create()
+        loginManager = LoginManager.getInstance()
         initListeners()
         initViewModel()
     }
@@ -77,6 +89,43 @@ class LoginFragment : Fragment() {
         binding.btnSignInGoogle.setOnClickListener {
             loginWithGoogleRequest()
         }
+        binding.btnSignInFacebook.setOnClickListener {
+            loginWithFacebookRequest()
+        }
+    }
+
+    private fun loginWithFacebookRequest() {
+        loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult) {
+                val token = result.accessToken.token
+                handleFacebookAccess(token)
+            }
+
+            override fun onCancel() {
+                // handle cancel
+            }
+
+            override fun onError(error: FacebookException) {
+                val msg = error.message ?: getString(R.string.generic_err_msg)
+                view?.showSnakeBarError(msg)
+                logAuthIssueToCrashlytics(msg, "Facebook")
+            }
+
+        })
+        loginManager.logInWithReadPermissions(
+            this,
+            listOf("email", "public_profile")
+        )
+
+    }
+
+    private fun handleFacebookAccess(token: String) {
+        loginViewModel.loginWithFacebook(token)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     // ActivityResultLauncher for the sign-in intent
@@ -104,7 +153,7 @@ class LoginFragment : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            Log.d(TAG,account.email.toString())
+            Log.d(TAG, account.email.toString())
             firebaseAuthWithGoogle(account.idToken!!)
 
         } catch (e: Exception) {
@@ -116,7 +165,7 @@ class LoginFragment : Fragment() {
 
 
     private fun firebaseAuthWithGoogle(idToken: String) {
-      loginViewModel.loginWithGoogle(idToken)
+        loginViewModel.loginWithGoogle(idToken)
     }
 
     private fun initViewModel() {
@@ -128,6 +177,7 @@ class LoginFragment : Fragment() {
                         progressDialog.dismiss()
                         goToHome()
                     }
+
                     is Resource.Error -> {
                         progressDialog.dismiss()
                         val msg =

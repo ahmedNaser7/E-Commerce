@@ -2,6 +2,7 @@ package com.example.ecommerce.data.repository.auth
 
 
 import com.example.ecommerce.data.model.Resource
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.Flow
@@ -54,6 +55,23 @@ class FirebaseAuthRepositoryImpl(
 
         }
 
+    }
+
+    override suspend fun loginWithFacebook(token: String): Flow<Resource<String>> = flow{
+        try {
+            emit(Resource.Loading())
+            val credential = FacebookAuthProvider.getCredential(token)
+            val task = auth.signInWithCredential(credential).await()
+            task.user?.let{ user ->
+                emit(Resource.Success(user.uid))
+            } ?: run {
+                emit(Resource.Error(Exception("Unknown User")))
+            }
+
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+
+        }
     }
 
 }

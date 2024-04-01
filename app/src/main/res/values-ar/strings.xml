@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">E-Commerce-lite</string>
-    <string name="register_screen" translatable="false">register screen</string>
-    <string name="login_screen" translatable="false">Login screen</string>
-    <string name="login_title" translatable="false">Welcome to Lafyuu</string>
-    <string name="login_sub_title" translatable="false">Sign in to continue</string>
-    <string name="loginEmailHint" translatable="false">\t Your Email</string>
-    <string name="loginPasswordHint" translatable="false">\t Your Password</string>
-    <string name="loginButtonHint" translatable="false">Sign Up</string>
-    <string name="login_with_google" translatable="false">Login with google</string>
-    <string name="login_with_facebook" translatable="false">Login with facebook</string>
-    <string name="forgot_password" translatable="false">Forgot Password?</string>
-    <string name="don_t_have_a_account" translatable="false">Don’t have a account?</string>
-    <string name="register" translatable="false"> Register</string>
-    <string name="or" translatable="false">OR</string>
+    <string name="register_screen" >register screen</string>
+    <string name="login_screen" >Login screen</string>
+    <string name="login_title" >Welcome to Lafyuu</string>
+    <string name="login_sub_title" >Sign in to continue</string>
+    <string name="loginEmailHint" >\t Your Email</string>
+    <string name="loginPasswordHint" >\t Your Password</string>
+    <string name="loginButtonHint" >Sign Up</string>
+    <string name="login_with_google" >Login with google</string>
+    <string name="login_with_facebook" >Login with facebook</string>
+    <string name="forgot_password" >Forgot Password?</string>
+    <string name="don_t_have_a_account" >Don’t have a account?</string>
+    <string name="register" > Register</string>
+    <string name="or" >OR</string>
+    <string name="loading" >Loading</string>
+    <string name="ok">ok</string>
+    <string name="generic_err_msg" >Error please try again later.</string>
+    <string name="google_sign_in_field_msg" >Google sign in failed, please retry again later.</string>
 </resources>

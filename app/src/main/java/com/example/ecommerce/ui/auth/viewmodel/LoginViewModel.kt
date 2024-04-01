@@ -40,14 +40,15 @@ class LoginViewModel
         val email = email.value
         val password = password.value
         if (isLoginIsValid.first()) {
-            firebaseAuthRepository.loginWithEmailAndPassword(email, password).onEach { resources ->
-                when (resources) {
+            firebaseAuthRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
+                when (resource) {
                     is Resource.Loading -> _loginState.emit(Resource.Loading())
                     is Resource.Success -> {
                         //TODO get user details from the user id
-                        _loginState.emit(Resource.Success(resources.data!!))
+                        _loginState.emit(Resource.Success(resource.data!!))
                     }
-                    is Resource.Error -> _loginState.emit(Resource.Error(resources.exception!!))
+
+                    is Resource.Error -> _loginState.emit(Resource.Error(resource.exception!!))
                 }
             }.launchIn(viewModelScope)
         } else {
@@ -57,16 +58,28 @@ class LoginViewModel
 
 
     fun loginWithGoogle(idToken: String) = viewModelScope.launch(IO) {
-        firebaseAuthRepository.loginWithGoogle(idToken).onEach { resources ->
-            when (resources) {
+        firebaseAuthRepository.loginWithGoogle(idToken).onEach { resource ->
+            when (resource) {
                 is Resource.Loading -> _loginState.emit(Resource.Loading())
                 is Resource.Success -> {
                     //TODO get user details from the user id
-                    _loginState.emit(Resource.Success(resources.data!!))
+                    _loginState.emit(Resource.Success(resource.data!!))
                 }
-                is Resource.Error -> _loginState.emit(Resource.Error(resources.exception!!))
+
+                is Resource.Error -> _loginState.emit(Resource.Error(resource.exception!!))
             }
         }.launchIn(viewModelScope)
+    }
+    
+    
+    fun loginWithFacebook(token:String) = viewModelScope.launch(IO) {
+        firebaseAuthRepository.loginWithFacebook(token).onEach { resource -> 
+            when(resource){
+                is Resource.Loading -> _loginState.emit(Resource.Loading())
+                is Resource.Success -> _loginState.emit(Resource.Success(resource.data!!))
+                is Resource.Error -> _loginState.emit(Resource.Error(resource.exception!!))
+            }
+        }
     }
 
 

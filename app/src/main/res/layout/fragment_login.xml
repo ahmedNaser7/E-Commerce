@@ -30,7 +30,7 @@
                 <ImageView
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="80dp"
                     android:src="@drawable/image_ic" />
 
                 <TextView
@@ -109,6 +109,7 @@
                     android:text="@string/login_with_google" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_signIn_facebook"
                     style="@style/SocialButtonStyle"
                     android:layout_marginTop="8dp"
                     android:drawableStart="@drawable/ic_facebook"

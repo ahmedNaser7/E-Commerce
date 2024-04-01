@@ -28,7 +28,26 @@ android {
             )
         }
         forEach {
-            it.buildConfigField("String", "WEB_CLIENT_ID", "\"679455053031-h9foca1bis0g76vr4e9teakrdtbprui3.apps.googleusercontent.com\"")
+            it.buildConfigField(
+                "String",
+                "WEB_CLIENT_ID",
+                "\"679455053031-h9foca1bis0g76vr4e9teakrdtbprui3.apps.googleusercontent.com\""
+            )
+            it.resValue(
+                "string",
+                "facebook_app_id",
+                "\"332027372785899\""
+            )
+            it.resValue(
+                "string",
+                "fb_login_protocol_scheme",
+                "\"fb332027372785899\""
+            )
+            it.resValue(
+                "string",
+                "facebook_client_token",
+                "\"e5b54f9f2d14aefefe573f2fa5623c04\""
+            )
         }
     }
     compileOptions {
@@ -39,7 +58,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures{
+    buildFeatures {
         //noinspection DataBindingWithoutKapt
         dataBinding = true
         viewBinding = true
@@ -54,7 +73,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation (libs.androidx.core.splashscreen)
+    implementation(libs.androidx.core.splashscreen)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,13 +90,12 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation(libs.play.services.auth)
 
-    //noinspection UseTomlInstead
-
-    //noinspection UseTomlInstead
+    //facebook
+    implementation(libs.facebook.android.sdk)
 
 
     // internet connection
-    implementation (libs.reactivenetwork.rx2)
+    implementation(libs.reactivenetwork.rx2)
 
     // navigation
     implementation(libs.androidx.navigation.ui.ktx)

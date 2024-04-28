@@ -10,28 +10,19 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class UserPreferencesRepositoryImpl(
-    private val userPreferencesDataSource: UserPreferencesDataSource)
-    :UserPreferencesRepository {
+    private val userPreferencesDataSource: UserPreferencesDataSource
+) : UserPreferencesRepository {
 
     // Read from data source
     override suspend fun isUserLoggedIn(): Flow<Boolean> {
-      return userPreferencesDataSource.isUserLoggedIn
+        return userPreferencesDataSource.isUserLoggedIn
     }
 
-    override fun getUserId(): Flow<String?> {
-        return userPreferencesDataSource.userID
-    }
 
     // write to data source
     override suspend fun saveLoginState(isLoggedIn: Boolean) {
-       return userPreferencesDataSource.saveLoginState(isLoggedIn)
+        return userPreferencesDataSource.saveLoginState(isLoggedIn)
     }
-
-    override suspend fun saveUserId(userId: String) {
-
-    }
-
-
 
 
 }

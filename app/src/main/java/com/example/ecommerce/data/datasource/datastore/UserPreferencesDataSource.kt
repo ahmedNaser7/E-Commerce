@@ -31,10 +31,5 @@ class UserPreferencesDataSource(private val context: Context) {
         it[DataStoreKeys.IS_USER_LOGGED_IN]?:false
     }
 
-    val userID:Flow<String?> = context.dataStore.data
-         .map { Preferences ->
-            Preferences[DataStoreKeys.USER_ID]?:""
-         }
-
 
 }

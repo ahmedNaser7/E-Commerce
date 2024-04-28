@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.ecommerce.data.repository.user.AppDataStoreRepositoryImpl
+import com.example.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 

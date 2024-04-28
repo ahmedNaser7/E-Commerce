@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepository
-import com.example.ecommerce.data.repository.user.AppDataStoreRepository
+import com.example.ecommerce.data.repository.common.AppDataStoreRepository
 import com.example.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow

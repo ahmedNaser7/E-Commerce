@@ -16,7 +16,7 @@ import com.example.ecommerce.R
 import com.example.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
-import com.example.ecommerce.data.repository.user.AppDataStoreRepositoryImpl
+import com.example.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.example.ecommerce.databinding.FragmentLoginBinding
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModelFactory

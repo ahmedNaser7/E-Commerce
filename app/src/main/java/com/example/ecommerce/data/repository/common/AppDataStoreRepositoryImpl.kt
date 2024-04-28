@@ -1,4 +1,4 @@
-package com.example.ecommerce.data.repository.user
+package com.example.ecommerce.data.repository.common
 
 import com.example.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import kotlinx.coroutines.flow.Flow

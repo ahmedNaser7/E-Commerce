@@ -1,4 +1,4 @@
-package com.example.ecommerce.data.repository.user
+package com.example.ecommerce.data.repository.common
 
 import kotlinx.coroutines.flow.Flow
 

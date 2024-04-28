@@ -13,10 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.BuildConfig
 import com.example.ecommerce.R
-import com.example.ecommerce.data.datasource.datastore.UserPreferencesDataSource
+import com.example.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
-import com.example.ecommerce.data.repository.user.UserPreferencesRepositoryImpl
+import com.example.ecommerce.data.repository.user.AppDataStoreRepositoryImpl
 import com.example.ecommerce.databinding.FragmentLoginBinding
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
@@ -24,7 +24,6 @@ import com.example.ecommerce.ui.common.view.ProgressDialog
 import com.example.ecommerce.ui.home.MainActivity
 import com.example.ecommerce.ui.showSnakeBarError
 import com.example.ecommerce.utils.CrashlyticsUtils
-import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -36,11 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import javax.security.auth.login.LoginException
 
@@ -52,8 +47,8 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(
-            userPreferencesRepository = UserPreferencesRepositoryImpl(
-                userPreferencesDataSource = UserPreferencesDataSource(requireActivity())
+            appPreferencesRepository = AppDataStoreRepositoryImpl(
+                appPreferencesDataSource = AppPreferencesDataSource(requireActivity())
             ),
             firebaseAuthRepository = FirebaseAuthRepositoryImpl(FirebaseAuth.getInstance())
         )

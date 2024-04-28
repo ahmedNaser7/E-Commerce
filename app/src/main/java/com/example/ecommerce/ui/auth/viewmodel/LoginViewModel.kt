@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepository
-import com.example.ecommerce.data.repository.user.UserPreferencesRepository
+import com.example.ecommerce.data.repository.user.AppDataStoreRepository
 import com.example.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel
     (
-    private val userPreferencesRepository: UserPreferencesRepository,
+    private val appPreferencesRepository: AppDataStoreRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
@@ -82,18 +82,22 @@ class LoginViewModel
         }
     }
 
+    private fun saveLoginState(isLogin: Boolean) = viewModelScope.launch(IO) {
+        appPreferencesRepository.saveLoginState(isLogin)
+    }
+
 
 }
 
 @Suppress("UNCHECKED_CAST")
 class LoginViewModelFactory(
-    private val userPreferencesRepository: UserPreferencesRepository,
+    private val appPreferencesRepository: AppDataStoreRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(userPreferencesRepository, firebaseAuthRepository) as T
+            return LoginViewModel(appPreferencesRepository, firebaseAuthRepository) as T
         }
         throw IllegalArgumentException("UnKnown ViewModel Class")
     }

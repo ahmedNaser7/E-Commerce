@@ -14,20 +14,19 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.R
-import com.example.ecommerce.data.datasource.datastore.UserPreferencesDataSource
-import com.example.ecommerce.data.repository.user.UserPreferencesRepositoryImpl
+import com.example.ecommerce.data.datasource.datastore.AppPreferencesDataSource
+import com.example.ecommerce.data.repository.user.AppDataStoreRepositoryImpl
 import com.example.ecommerce.ui.common.viewmodel.UserViewModel
 import com.example.ecommerce.ui.common.viewmodel.UserViewModelFactory
 import com.example.ecommerce.ui.auth.AuthActivity
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
      private val userViewModel: UserViewModel by viewModels {
-         UserViewModelFactory(UserPreferencesRepositoryImpl(userPreferencesDataSource = UserPreferencesDataSource(this)))
+         UserViewModelFactory(AppDataStoreRepositoryImpl(appPreferencesDataSource = AppPreferencesDataSource(this)))
      }
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()

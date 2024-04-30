@@ -39,7 +39,18 @@ class MainActivity : AppCompatActivity() {
             return
         }
         setContentView(R.layout.activity_main)
+        initViewModel()
 
+    }
+
+    private fun initViewModel() {
+        lifecycleScope.launch {
+            val userDetails = runBlocking { userViewModel.getUserDetails().first() }
+            Log.d(TAG, "initViewModel: $userDetails")
+            userViewModel.userDetailsState.collect {
+                Log.d(TAG, "initViewModel: ${it?.email}")
+            }
+        }
     }
 
     private fun goToAuthActivity() {

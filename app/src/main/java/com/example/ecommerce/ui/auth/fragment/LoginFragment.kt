@@ -46,18 +46,13 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val loginViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(
-            appPreferencesRepository = AppDataStoreRepositoryImpl(
-                appPreferencesDataSource = AppPreferencesDataSource(requireActivity())
-            ),
-            firebaseAuthRepository = FirebaseAuthRepositoryImpl(FirebaseAuth.getInstance())
-        )
+        LoginViewModelFactory(requireContext())
     }
 
     private val progressDialog by lazy { ProgressDialog.CraeteProgressDialog(requireContext()) }
 
-    lateinit var callbackManager: CallbackManager
-    lateinit var loginManager: LoginManager
+    private val callbackManager:CallbackManager by lazy {   CallbackManager.Factory.create() }
+    private val loginManager:LoginManager by lazy {  LoginManager.getInstance() }
     lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -74,8 +69,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
-        callbackManager = CallbackManager.Factory.create()
-        loginManager = LoginManager.getInstance()
         initListeners()
         initViewModel()
     }
@@ -118,6 +111,7 @@ class LoginFragment : Fragment() {
         loginViewModel.loginWithFacebook(token)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)

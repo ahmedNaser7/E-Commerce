@@ -42,5 +42,5 @@ object CrashlyticsUtils {
 }
 
 class CustomCrashlyticsLogException(msg:String):Exception(msg)
-
+class LoginException(msg:String):Exception(msg)
 class UserDetailsException(msg:String):Exception(msg)

@@ -1,33 +1,26 @@
 package com.example.ecommerce.ui.home
 
-import android.animation.ObjectAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.R
-import com.example.ecommerce.data.datasource.datastore.AppPreferencesDataSource
-import com.example.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.example.ecommerce.ui.common.viewmodel.UserViewModel
 import com.example.ecommerce.ui.common.viewmodel.UserViewModelFactory
 import com.example.ecommerce.ui.auth.AuthActivity
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(this@MainActivity)
+        UserViewModelFactory(this@HomeActivity)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

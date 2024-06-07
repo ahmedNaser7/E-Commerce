@@ -11,17 +11,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerce.BuildConfig
 import com.example.ecommerce.R
-import com.example.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.example.ecommerce.data.model.Resource
-import com.example.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
-import com.example.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.example.ecommerce.databinding.FragmentLoginBinding
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
 import com.example.ecommerce.ui.common.view.ProgressDialog
-import com.example.ecommerce.ui.home.MainActivity
+import com.example.ecommerce.ui.home.HomeActivity
 import com.example.ecommerce.ui.showSnakeBarError
 import com.example.ecommerce.utils.CrashlyticsUtils
 import com.facebook.CallbackManager
@@ -74,11 +72,18 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListeners() {
+        binding.btnRegister.setOnClickListener {
+         findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
         binding.btnSignInGoogle.setOnClickListener {
             loginWithGoogleRequest()
         }
         binding.btnSignInFacebook.setOnClickListener {
             loginWithFacebookRequest()
+        }
+        binding.btnForgotPassword.setOnClickListener {
+            ForgetPasswordFragment()
+                .show(parentFragmentManager,"forget-password")
         }
     }
 
@@ -86,7 +91,8 @@ class LoginFragment : Fragment() {
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 val token = result.accessToken.token
-                handleFacebookAccess(token)
+                loginViewModel.loginWithFacebook(token)
+                Log.e(TAG,"$result.accessToken.token")
             }
 
             override fun onCancel() {
@@ -97,6 +103,7 @@ class LoginFragment : Fragment() {
                 val msg = error.message ?: getString(R.string.generic_err_msg)
                 view?.showSnakeBarError(msg)
                 logAuthIssueToCrashlytics(msg, "Facebook")
+                Log.e(TAG,"$error.message")
             }
 
         })
@@ -105,16 +112,6 @@ class LoginFragment : Fragment() {
             listOf("email", "public_profile")
         )
 
-    }
-
-    private fun handleFacebookAccess(token: String) {
-        loginViewModel.loginWithFacebook(token)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     // ActivityResultLauncher for the sign-in intent
@@ -180,7 +177,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToHome() {
-        requireContext().startActivity(Intent(requireContext(), MainActivity::class.java).apply {
+        requireContext().startActivity(Intent(requireContext(), HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         })
         requireActivity().finish()

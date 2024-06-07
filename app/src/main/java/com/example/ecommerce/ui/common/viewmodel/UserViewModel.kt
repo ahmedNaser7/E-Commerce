@@ -43,7 +43,6 @@ class UserViewModel(
 ) : ViewModel() {
 
     // logout State
-
     private val logOutState = MutableSharedFlow<Resource<Unit>>()
 
     val userDetailsState = getUserDetails().stateIn(

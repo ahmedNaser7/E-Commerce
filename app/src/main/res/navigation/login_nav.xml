@@ -10,10 +10,18 @@
         android:name="com.example.ecommerce.ui.auth.fragment.LoginFragment"
         android:label="LoginFragment"
 
-         />
+         >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.ecommerce.ui.auth.fragment.RegisterFragment"
         android:label="RegisterFragment"
-         />
+         >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

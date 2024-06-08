@@ -1,24 +1,19 @@
 package com.example.ecommerce.ui.auth.fragment
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.ecommerce.BuildConfig
 import com.example.ecommerce.R
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.databinding.FragmentLoginBinding
+import com.example.ecommerce.ui.auth.getGoogleRequestIntent
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.example.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
-import com.example.ecommerce.ui.common.view.ProgressDialog
+import com.example.ecommerce.ui.common.fragments.BaseFragment
 import com.example.ecommerce.ui.home.HomeActivity
 import com.example.ecommerce.ui.showSnakeBarError
 import com.example.ecommerce.utils.CrashlyticsUtils
@@ -29,51 +24,32 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import javax.security.auth.login.LoginException
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<FragmentLoginBinding,LoginViewModel>() {
 
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
+    private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
 
-    private val loginViewModel: LoginViewModel by viewModels {
+    override val viewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(requireContext())
     }
 
-    private val progressDialog by lazy { ProgressDialog.CraeteProgressDialog(requireContext()) }
+    override fun getLayoutId(): Int = R.layout.fragment_login
 
-    private val callbackManager:CallbackManager by lazy {   CallbackManager.Factory.create() }
-    private val loginManager:LoginManager by lazy {  LoginManager.getInstance() }
-    lateinit var auth: FirebaseAuth
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = loginViewModel
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        auth = FirebaseAuth.getInstance()
+    override fun init() {
         initListeners()
         initViewModel()
     }
 
+
     private fun initListeners() {
         binding.btnRegister.setOnClickListener {
-         findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         binding.btnSignInGoogle.setOnClickListener {
             loginWithGoogleRequest()
@@ -83,7 +59,7 @@ class LoginFragment : Fragment() {
         }
         binding.btnForgotPassword.setOnClickListener {
             ForgetPasswordFragment()
-                .show(parentFragmentManager,"forget-password")
+                .show(parentFragmentManager, "forget-password")
         }
     }
 
@@ -91,8 +67,7 @@ class LoginFragment : Fragment() {
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 val token = result.accessToken.token
-                loginViewModel.loginWithFacebook(token)
-                Log.e(TAG,"$result.accessToken.token")
+                viewModel.loginWithFacebook(token)
             }
 
             override fun onCancel() {
@@ -103,7 +78,6 @@ class LoginFragment : Fragment() {
                 val msg = error.message ?: getString(R.string.generic_err_msg)
                 view?.showSnakeBarError(msg)
                 logAuthIssueToCrashlytics(msg, "Facebook")
-                Log.e(TAG,"$error.message")
             }
 
         })
@@ -113,6 +87,7 @@ class LoginFragment : Fragment() {
         )
 
     }
+
 
     // ActivityResultLauncher for the sign-in intent
     private val launcher =
@@ -126,13 +101,7 @@ class LoginFragment : Fragment() {
         }
 
     private fun loginWithGoogleRequest() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(BuildConfig.WEB_CLIENT_ID).requestEmail().requestProfile()
-            .requestServerAuthCode(BuildConfig.WEB_CLIENT_ID).build()
-
-        val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        googleSignInClient.signOut()
-        val signInIntent = googleSignInClient.signInIntent
+        val signInIntent = getGoogleRequestIntent(requireActivity())
         launcher.launch(signInIntent)
     }
 
@@ -140,7 +109,7 @@ class LoginFragment : Fragment() {
         try {
             val account = completedTask.getResult(ApiException::class.java)
             Log.d(TAG, account.email.toString())
-            firebaseAuthWithGoogle(account.idToken!!)
+            viewModel.loginWithGoogle(account.idToken!!)
 
         } catch (e: Exception) {
             val msg = e.message ?: getString(R.string.generic_err_msg)
@@ -149,14 +118,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        loginViewModel.loginWithGoogle(idToken)
-    }
-
     private fun initViewModel() {
         lifecycleScope.launch {
-            loginViewModel.loginState.collect { resources ->
+            viewModel.loginState.collect { resources ->
                 when (resources) {
                     is Resource.Loading -> progressDialog.show()
                     is Resource.Success -> {

@@ -10,7 +10,6 @@ import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.databinding.FragmentRegisterBinding
 import com.example.ecommerce.ui.auth.getGoogleRequestIntent
 import com.example.ecommerce.ui.auth.viewmodel.RegisterViewModel
-import com.example.ecommerce.ui.auth.viewmodel.RegisterViewModelFactory
 import com.example.ecommerce.ui.common.fragments.BaseFragment
 import com.example.ecommerce.ui.showSnakeBarError
 import com.facebook.CallbackManager
@@ -22,16 +21,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding,RegisterViewModel>() {
 
     private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
-    override val viewModel: RegisterViewModel by viewModels {
-        RegisterViewModelFactory(requireContext())
-    }
+    override val viewModel: RegisterViewModel by viewModels()
 
     override fun getLayoutId(): Int =R.layout.fragment_register
 

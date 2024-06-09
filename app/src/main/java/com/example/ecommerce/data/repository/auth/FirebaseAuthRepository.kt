@@ -18,7 +18,6 @@ interface FirebaseAuthRepository {
         token:String
     ):Flow<Resource<UserDetailsModel>>
 
-    fun logout()
 
     suspend fun registerWithEmailAndPassword(
         name :String,
@@ -34,9 +33,10 @@ interface FirebaseAuthRepository {
         token:String
     ):Flow<Resource<UserDetailsModel>>
 
+
     suspend fun sendPasswordWithEmail(
         email: String
     ):Flow<Resource<String>>
 
-
+    fun logout()
 }

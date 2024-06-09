@@ -1,14 +1,16 @@
 package com.example.ecommerce.data.repository.user
 
+import android.app.Application
 import android.content.Context
 import com.example.ecommerce.data.datasource.datastore.userDetailsDataStore
 import com.example.ecommerce.data.model.user.UserDetailsPreferences
 import com.example.ecommerce.data.model.user.userDetailsPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class UserPreferencesRepositoryImpl(
-    private val context: Context
+class UserPreferencesRepositoryImpl @Inject constructor(
+    private val context: Application
 ) : UserPreferencesRepository {
 
     override fun getUserDetails(): Flow<UserDetailsPreferences> {
@@ -38,7 +40,7 @@ class UserPreferencesRepositoryImpl(
     }
 
     override suspend fun updateUserDetails(userDetailsPreferences: UserDetailsPreferences) {
-        context.userDetailsDataStore.updateData { userPreferences ->
+        context.userDetailsDataStore.updateData {
             userDetailsPreferences
         }
     }

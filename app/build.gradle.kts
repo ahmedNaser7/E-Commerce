@@ -5,6 +5,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
     id("com.google.protobuf") version "0.9.4" apply true
 }
 
@@ -110,7 +111,16 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.protobuf.kotlin.lite) // proto kotlin compiler
 
+    //hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
 }
+
+kapt {
+    correctErrorTypes = true
+}
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:4.26.1"

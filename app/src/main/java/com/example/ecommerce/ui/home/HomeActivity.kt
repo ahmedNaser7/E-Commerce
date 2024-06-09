@@ -11,17 +11,15 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.ecommerce.R
 import com.example.ecommerce.ui.common.viewmodel.UserViewModel
-import com.example.ecommerce.ui.common.viewmodel.UserViewModelFactory
 import com.example.ecommerce.ui.auth.AuthActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-    private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(this@HomeActivity)
-    }
+    private val userViewModel: UserViewModel by viewModels ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()

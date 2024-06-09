@@ -10,6 +10,7 @@ import com.example.ecommerce.data.model.user.UserDetailsModel
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.example.ecommerce.utils.isValidEmail
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,9 +20,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class RegisterViewModel(
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
@@ -69,19 +71,3 @@ class RegisterViewModel(
 
 }
 
-@Suppress("UNCHECKED_CAST")
-class RegisterViewModelFactory(
-    private val context: Context
-) : ViewModelProvider.Factory {
-
-    private val firebaseAuthRepository = FirebaseAuthRepositoryImpl()
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-            return RegisterViewModel(
-                firebaseAuthRepository
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

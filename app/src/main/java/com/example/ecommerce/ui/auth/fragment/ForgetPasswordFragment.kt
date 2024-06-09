@@ -7,21 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.example.ecommerce.data.model.Resource
-import com.example.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.example.ecommerce.databinding.FragmentForgetPasswordBinding
 import com.example.ecommerce.ui.auth.viewmodel.ForgetPasswordViewModel
-import com.example.ecommerce.ui.auth.viewmodel.ForgetPasswordViewModelFactory
 import com.example.ecommerce.ui.common.view.ProgressDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ForgetPasswordFragment : BottomSheetDialogFragment() {
     private val progressDialog by lazy { ProgressDialog.CraeteProgressDialog(requireContext()) }
-    private val viewModel:ForgetPasswordViewModel by viewModels{
-        ForgetPasswordViewModelFactory(FirebaseAuthRepositoryImpl())
-    }
+    private val viewModel:ForgetPasswordViewModel by viewModels()
     private var _binding:FragmentForgetPasswordBinding?=null
     private val binding get() = _binding!!
     override fun onCreateView(

@@ -6,13 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.example.ecommerce.utils.isValidEmail
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class ForgetPasswordViewModel(
+@HiltViewModel
+class ForgetPasswordViewModel @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository
 ):ViewModel() {
 
@@ -29,20 +31,6 @@ class ForgetPasswordViewModel(
               }
             }
         }
-    }
-}
-
-@Suppress("UNCHECKED_CAST")
-class ForgetPasswordViewModelFactory(
-    private val firebaseAuthRepository: FirebaseAuthRepository
-):ViewModelProvider.Factory{
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ForgetPasswordViewModel::class.java)){
-            return ForgetPasswordViewModel(
-                firebaseAuthRepository
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown class is found")
     }
 }
 

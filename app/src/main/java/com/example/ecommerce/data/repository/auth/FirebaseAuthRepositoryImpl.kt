@@ -16,11 +16,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 import kotlin.Exception
 
-class FirebaseAuthRepositoryImpl(
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
+class FirebaseAuthRepositoryImpl @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val fireStore: FirebaseFirestore
 ) : FirebaseAuthRepository {
 
     override suspend fun loginWithEmailAndPassword(
@@ -57,15 +58,6 @@ class FirebaseAuthRepositoryImpl(
                 emit(Resource.Error(Exception(msg)))
                 return@flow
             }
-
-//            if (authResult.user?.isEmailVerified == false) {
-//                val result = authResult.user?.sendEmailVerification()?.await()
-//                Log.d(TAG,result.toString())
-//                val msg = "Email not verified ,we sent you an email"
-//                logAuthIssueToCrashLyticsIssues(msg, authProvider.name)
-//                emit(Resource.Error(Exception(msg)))
-//                return@flow
-//            }
 
             // get user from fireStore to put it in UserDetailsModel
 

@@ -1,28 +1,47 @@
 package com.example.ecommerce.data.repository.user
 
+import android.app.Application
 import android.content.Context
-import androidx.datastore.preferences.core.edit
-import com.example.ecommerce.data.datastore.DataStoreKeys.IS_USER_LOGGED_IN
-import com.example.ecommerce.data.datastore.dataStore
+import com.example.ecommerce.data.datasource.datastore.userDetailsDataStore
+import com.example.ecommerce.data.model.user.UserDetailsPreferences
+import com.example.ecommerce.data.model.user.userDetailsPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class UserPreferencesRepositoryImpl(private val context: Context):UserPreferencesRepository {
+class UserPreferencesRepositoryImpl @Inject constructor(
+    private val context: Application
+) : UserPreferencesRepository {
 
-    // Read from Data Store
-    override suspend fun isUserLoggedIn(): Flow<Boolean> {
-        return context.dataStore.data.map { preferences ->
-            preferences[IS_USER_LOGGED_IN] ?: false
+    override fun getUserDetails(): Flow<UserDetailsPreferences> {
+        return context.userDetailsDataStore.data
+    }
+
+    override suspend fun updateUserId(userId: String) {
+        context.userDetailsDataStore.updateData { userPreferences ->
+            userPreferences.toBuilder()
+                .setId(userId)
+                .build()
         }
     }
 
-    // write to Data Store
-    override suspend fun saveLoginState(isLoggedIn: Boolean) {
-        context.dataStore.edit{ preferences->
-            preferences[IS_USER_LOGGED_IN]=isLoggedIn
+    override suspend fun getUserId(): Flow<String> {
+        return context.userDetailsDataStore.data.map { userPreferences ->
+            userPreferences.id
         }
     }
 
+    override suspend fun clearUserPreferences() {
+        context.userDetailsDataStore.updateData { userPreferences ->
+            userPreferences.toBuilder()
+                .clear()
+                .build()
+        }
+    }
 
-
+    override suspend fun updateUserDetails(userDetailsPreferences: UserDetailsPreferences) {
+        context.userDetailsDataStore.updateData {
+            userDetailsPreferences
+        }
+    }
 }

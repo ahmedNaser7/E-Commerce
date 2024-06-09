@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
+    id("com.google.protobuf") version "0.9.4" apply true
 }
 
 android {
@@ -27,6 +31,28 @@ android {
                 "proguard-rules.pro"
             )
         }
+        forEach {
+            it.buildConfigField(
+                "String",
+                "WEB_CLIENT_ID",
+                "\"679455053031-h9foca1bis0g76vr4e9teakrdtbprui3.apps.googleusercontent.com\""
+            )
+            it.resValue(
+                "string",
+                "facebook_app_id",
+                "\"332027372785899\""
+            )
+            it.resValue(
+                "string",
+                "fb_login_protocol_scheme",
+                "\"fb332027372785899\""
+            )
+            it.resValue(
+                "string",
+                "facebook_client_token",
+                "\"e5b54f9f2d14aefefe573f2fa5623c04\""
+            )
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -36,10 +62,11 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures{
+    buildFeatures {
         //noinspection DataBindingWithoutKapt
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -50,28 +77,64 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation (libs.androidx.core.splashscreen)
+    implementation(libs.androidx.core.splashscreen)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     //firebase
     implementation(platform(libs.firebase.bom))
-
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-firestore-ktx")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-crashlytics")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-analytics")
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation(libs.play.services.auth)
+
+    //facebook
+    implementation(libs.facebook.android.sdk)
+
 
     // internet connection
-    implementation (libs.reactivenetwork.rx2)
+    implementation(libs.reactivenetwork.rx2)
 
     // navigation
-    implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
 
     //data Store
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.kotlin.lite) // proto kotlin compiler
 
+    //hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.26.1"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+                register("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.ecommerce.ui.auth.viewmodel.RegisterViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.auth.fragment.RegisterFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="55dp"
+                    android:src="@drawable/image_ic" />
+
+                <TextView
+                    style="@style/TextTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/SignUpTitle" />
+
+                <TextView
+                    style="@style/MessageTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/signUpSubTitle" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="36dp"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawablePadding="20dp"
+                    android:hint="@string/SignUpUserName"
+                    android:inputType="textEmailAddress"
+                    android:text="@={viewModel.name}" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/ic_email"
+                    android:hint="@string/loginEmailHint"
+                    android:inputType="textEmailAddress"
+                    android:text="@={viewModel.email}" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/password_ic"
+                    android:hint="@string/loginPasswordHint"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.password}" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/password_ic"
+                    android:drawablePadding="20dp"
+                    android:hint="@string/signUpPasswordAgain"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.confirmPassword}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btn_signUp"
+                    style="@style/PrimaryButtonStyle"
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{()->viewModel.register()}"
+                    android:text="@string/loginButtonHint" />
+
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/btn_signUp_google"
+                    style="@style/SocialButtonStyle"
+                    android:drawableStart="@drawable/ic_google"
+                    android:text="@string/signup_with_google" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_signUp_facebook"
+                    style="@style/SocialButtonStyle"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/ic_facebook"
+                    android:text="@string/signup_with_facebook" />
+
+
+                <LinearLayout
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/MessageTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/have_a_account" />
+
+                    <TextView
+                        style="@style/MediumPrimaryTextViewStyle"
+                        android:text="@string/sign_in" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </FrameLayout>
+
+</layout>

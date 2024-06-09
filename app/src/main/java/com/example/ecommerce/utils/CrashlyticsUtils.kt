@@ -8,7 +8,12 @@ import com.google.firebase.crashlytics.crashlytics
 object CrashlyticsUtils {
 
     const val CUSTOM_KEY_ENDPOINT = "Custom-key"
-    const val CUSTOM_KEY = "Custom-key"
+
+    const val LOGIN_KEY = "LOGIN-KEY"
+    const val REGISTER_KEY = "REGISTER-KEY"
+    const val LOGIN_PROVIDER = "LOGIN_PROVIDER"
+    const val REGISTER_PROVIDER = "REGISTER_PROVIDER"
+    const val LISTEN_TO_USER_DETAILS = "LISTEN_TO_USER_DETAILS"
 
     fun sendLogToCrashlytics( msg:String ,vararg keys:String){
         keys.forEach { key ->
@@ -39,3 +44,6 @@ object CrashlyticsUtils {
 }
 
 class CustomCrashlyticsLogException(msg:String):Exception(msg)
+class LoginException(msg:String):Exception(msg)
+class UserDetailsException(msg:String):Exception(msg)
+class RegisterException(msg: String):Exception(msg)

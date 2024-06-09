@@ -21,7 +21,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center_horizontal"
@@ -30,7 +30,7 @@
                 <ImageView
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="40dp"
                     android:src="@drawable/image_ic" />
 
                 <TextView
@@ -117,10 +117,12 @@
 
                 <TextView
                     style="@style/MediumPrimaryTextViewStyle"
+                    android:id="@+id/btn_forgot_password"
                     android:layout_marginTop="16dp"
                     android:text="@string/forgot_password" />
 
                 <LinearLayout
+                    android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"

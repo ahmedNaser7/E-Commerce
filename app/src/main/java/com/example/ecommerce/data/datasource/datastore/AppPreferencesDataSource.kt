@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
-class AppPreferencesDataSource(private val context: Context) {
-
+class AppPreferencesDataSource@Inject constructor(private val context: Context) {
 
     // write
     suspend fun saveLoginState(isLoggedIn:Boolean){

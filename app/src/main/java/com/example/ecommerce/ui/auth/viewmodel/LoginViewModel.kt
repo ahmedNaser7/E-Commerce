@@ -16,6 +16,7 @@ import com.example.ecommerce.data.repository.user.UserPreferencesRepository
 import com.example.ecommerce.data.repository.user.UserPreferencesRepositoryImpl
 import com.example.ecommerce.domain.toUserDetailsPreferences
 import com.example.ecommerce.utils.isValidEmail
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,9 +28,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel
-    (
+    @Inject constructor(
     private val appPreferencesRepository: AppDataStoreRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -90,26 +93,5 @@ class LoginViewModel
         userPreferencesRepository.updateUserDetails(userDetailsModel.toUserDetailsPreferences())
     }
 
-
-}
-
-@Suppress("UNCHECKED_CAST")
-class LoginViewModelFactory(
-    private val context: Context
-) : ViewModelProvider.Factory {
-    private val appPreferencesRepository =
-        AppDataStoreRepositoryImpl(AppPreferencesDataSource(context))
-    private val firebaseAuthRepository = FirebaseAuthRepositoryImpl()
-    private val userPreferencesRepository = UserPreferencesRepositoryImpl(context)
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(
-                appPreferencesRepository,
-                firebaseAuthRepository,
-                userPreferencesRepository,
-            ) as T
-        }
-        throw IllegalArgumentException("UnKnown ViewModel Class")
-    }
 
 }

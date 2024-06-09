@@ -8,9 +8,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class UserFireStoreRepositoryImpl(
-    private val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
+class UserFireStoreRepositoryImpl @Inject constructor(
+    private val fireStore: FirebaseFirestore
 ) : UserFireStoreRepository {
     override suspend fun getUserDetails(id: String): Flow<Resource<UserDetailsModel>> =
         callbackFlow {

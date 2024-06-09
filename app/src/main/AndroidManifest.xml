@@ -20,7 +20,7 @@
             android:name=".ui.auth.AuthActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.home.MainActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="true"
             android:theme="@style/MainActivityTheme">
             <intent-filter>

@@ -21,6 +21,7 @@ import com.example.ecommerce.domain.toUserDetailsPreferences
 import com.example.ecommerce.utils.CrashlyticsUtils
 import com.example.ecommerce.utils.CrashlyticsUtils.LISTEN_TO_USER_DETAILS
 import com.example.ecommerce.utils.UserDetailsException
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,12 +31,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // class to save the data from dataStore
 // observe on data
 // link
 
-class UserViewModel(
+@HiltViewModel
+class UserViewModel @Inject constructor(
     private val appUserPreferencesRepository: AppDataStoreRepository,
     private val userFireStoreRepository: UserFireStoreRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -43,7 +46,6 @@ class UserViewModel(
 ) : ViewModel() {
 
     // logout State
-
     private val logOutState = MutableSharedFlow<Resource<Unit>>()
 
     val userDetailsState = getUserDetails().stateIn(
@@ -114,27 +116,3 @@ class UserViewModel(
 }
 
 
-class UserViewModelFactory(
-    private val context: Context,
-) : ViewModelProvider.Factory {
-    private val appUserPreferencesRepositoryImpl = AppDataStoreRepositoryImpl(
-        AppPreferencesDataSource(context)
-    )
-    private val userFireStoreRepository = UserFireStoreRepositoryImpl()
-
-    private val userPreferencesRepository = UserPreferencesRepositoryImpl(context)
-
-    private val authRepo = FirebaseAuthRepositoryImpl()
-
-    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-        if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST") return UserViewModel(
-                appUserPreferencesRepositoryImpl,
-                userFireStoreRepository,
-                userPreferencesRepository,
-                authRepo
-            ) as T
-        }
-        throw IllegalArgumentException("UNKNOWN ViewModel Class")
-    }
-}

@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.0"
 coreSplashscreen = "1.0.1"
+datastore = "1.1.0"
 datastorePreferences = "1.0.0"
 facebookAndroidSdk = "16.0.0"
 firebaseBom = "32.7.3"
@@ -17,12 +18,14 @@ navigationDynamicFeaturesFragment = "2.7.7"
 navigationUiKtx = "2.7.7"
 navigationFragmentKtx = "2.7.7"
 playServicesAuth = "21.0.0"
+protobufKotlinLite = "4.26.0"
 reactivenetworkRx2 = "3.0.8"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-navigation-dynamic-features-fragment = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "navigationDynamicFeaturesFragment" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
@@ -37,6 +40,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobufKotlinLite" }
 reactivenetwork-rx2 = { module = "com.github.pwittchen:reactivenetwork-rx2", version.ref = "reactivenetworkRx2" }
 
 

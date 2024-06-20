@@ -2,12 +2,12 @@ package com.example.ecommerce.data.repository.user
 
 import com.example.ecommerce.data.model.Resource
 import com.example.ecommerce.data.model.user.UserDetailsModel
+import com.example.ecommerce.utils.AccountDisabledException
+import com.example.ecommerce.utils.UserNotFoundException
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserFireStoreRepositoryImpl @Inject constructor(
@@ -38,5 +38,4 @@ class UserFireStoreRepositoryImpl @Inject constructor(
         }
 }
 
-class AccountDisabledException(message: String) : Exception(message)
-class UserNotFoundException(message: String) : Exception(message)
+
